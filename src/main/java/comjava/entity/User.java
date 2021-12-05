@@ -24,13 +24,11 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
 	private String name;
 	private String email;
 	private String password;
 	private String phone;
 	private String address;
-	
 	@Enumerated(EnumType.STRING)
 	private RoleType roleType;
 }

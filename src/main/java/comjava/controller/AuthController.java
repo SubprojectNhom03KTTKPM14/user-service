@@ -1,5 +1,7 @@
 package comjava.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import comjava.dto.AccessTokenDTO;
 import comjava.dto.LoginRequestDTO;
+import comjava.dto.UserDTO;
+import comjava.entity.User;
 import comjava.service.UserService;
 
 @RestController
@@ -16,6 +20,12 @@ public class AuthController {
 
 	@Autowired
 	private UserService userService;
+
+	@PostMapping("/register")
+	public AccessTokenDTO register(@Valid @RequestBody UserDTO userDTO ) {
+
+		return userService.register(userDTO);
+	}
 
 	@PostMapping("/login")
 	public AccessTokenDTO login(@RequestBody LoginRequestDTO loginRequestDTO) {
