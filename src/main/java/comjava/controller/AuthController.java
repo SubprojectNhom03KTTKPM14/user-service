@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import comjava.dto.AccessTokenDTO;
 import comjava.dto.LoginRequestDTO;
 import comjava.dto.UserDTO;
-import comjava.entity.User;
 import comjava.service.UserService;
 
 @RestController
