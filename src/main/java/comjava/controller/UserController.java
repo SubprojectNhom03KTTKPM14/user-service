@@ -1,5 +1,7 @@
 package comjava.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,5 +22,11 @@ public class UserController {
 	public UserDTO getById(@PathVariable("userId") Integer userId) {
 
 		return userService.getUserById(userId);
+	}
+	
+	@GetMapping()
+	public List<UserDTO> getUserList() {
+
+		return userService.getUserList();
 	}
 }
