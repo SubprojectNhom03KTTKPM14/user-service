@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 		if (!passwordEncoder.matches(loginRequestDTO.getPassword(), user.getPassword()))
 			throw new RuntimeException("Password wrong");
 
-		String token = jwtTokenProvider.generateToken(user.getId());
+		String token = jwtTokenProvider.generateToken(user.getId(), user.getRoleType());
 		return new AccessTokenDTO(token);
 	}
 
@@ -51,30 +51,27 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public AccessTokenDTO register(UserDTO userDTO) {
-		
+
 		String email = userDTO.getEmail();
-		
-		if(userRepository.findByEmail(email).isPresent())
+
+		if (userRepository.findByEmail(email).isPresent())
 			throw new RuntimeException("User is already exist");
-		
+
 		userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 
 		int userId = userRepository.save(toUser(userDTO)).getId();
-		String token = jwtTokenProvider.generateToken(userId);
-		
+		String token = jwtTokenProvider.generateToken(userId, RoleType.USER);
+
 		return new AccessTokenDTO(token);
 	}
 
 	@Override
 	public List<UserDTO> getUserList() {
-		return userRepository.findAll().stream()
-				.map(userEle -> new UserDTO(userEle))
-				.collect(Collectors.toList());
+		return userRepository.findAll().stream().map(userEle -> new UserDTO(userEle)).collect(Collectors.toList());
 	}
-	
-	
+
 	public User toUser(UserDTO userDTO) {
-		
+
 		User user = new User();
 		user.setId(userDTO.getId());
 		user.setName(userDTO.getName());
